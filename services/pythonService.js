@@ -1,6 +1,6 @@
 const axios = require("axios");
 
-const PYTHON_TTS_URL = process.env.PYTHON_TTS_URL || "ttps://8080-01kj47mby9s29qcqcqek4c2x6e.cloudspaces.litng.ai";
+const PYTHON_TTS_URL = process.env.PYTHON_TTS_URL || "https://8080-01kj47mby9s29qcqcqek4c2x6e.cloudspaces.litng.ai";
 const REQUEST_TIMEOUT_MS = Number(process.env.REQUEST_TIMEOUT_MS || 120000);
 
 const client = axios.create({
