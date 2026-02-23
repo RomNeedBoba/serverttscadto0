@@ -1,6 +1,6 @@
 const axios = require("axios");
 
-const PYTHON_TTS_URL = process.env.PYTHON_TTS_URL || "http://localhost:8000";
+const PYTHON_TTS_URL = process.env.PYTHON_TTS_URL || "https://backend-ttscadt.onrender.com";
 const REQUEST_TIMEOUT_MS = Number(process.env.REQUEST_TIMEOUT_MS || 120000);
 
 const client = axios.create({
