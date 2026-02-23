@@ -11,25 +11,21 @@ const client = axios.create({
 exports.callPythonSynthesize = async ({ text }) => {
   try {
     const resp = await client.post("/synthesize", { text });
-    
     const data = resp.data;
 
-    // --- THE FIX ---
-    // If Python gives us a relative URL like "/audio/123.wav", 
-    // we attach the Python server's domain to it!
-    if (data.stage4_audio_url && data.stage4_audio_url.startsWith("/")) {
-      data.stage4_audio_url = `${PYTHON_TTS_URL}${data.stage4_audio_url}`;
+    // Attach the Python server's URL if it's missing
+    if (data.stage4_audio_url && !data.stage4_audio_url.startsWith("http")) {
+      const path = data.stage4_audio_url.startsWith("/") 
+        ? data.stage4_audio_url 
+        : `/${data.stage4_audio_url}`;
+        
+      data.stage4_audio_url = `${PYTHON_TTS_URL}${path}`;
     }
 
     return data;
   } catch (err) {
-    // Normalize Axios errors for your Express middleware
     const status = err.response?.status || 502;
-    const detail =
-      err.response?.data ||
-      err.message ||
-      "Failed calling Python TTS service";
-
+    const detail = err.response?.data || err.message || "Failed calling Python TTS service";
     const e = new Error(typeof detail === "string" ? detail : JSON.stringify(detail));
     e.status = status;
     e.detail = detail;

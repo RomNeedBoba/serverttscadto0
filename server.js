@@ -32,3 +32,5 @@ const port = process.env.PORT || 5000;
 app.listen(port, () => {
   console.log(`Node API listening on http://localhost:${port}`);
 });
+
+app.mount("/audio", StaticFiles(directory="generated_audio"), name="audio")
